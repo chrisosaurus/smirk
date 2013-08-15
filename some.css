@@ -1,0 +1,43 @@
+body {
+    margin: 3em;
+    line-height: 1.5em;
+}
+
+.center {
+    margin: auto;
+    max-width: 40em;
+}
+
+ul {
+    padding-left: 0;
+}
+
+a {
+    /* dislike typical blue/purple link colouring */
+    color: #000000;
+}
+
+/* date on home page in list */
+ul li a time {
+    color: #999;
+}
+
+/* title on post page */
+#title {
+    text-align: center;
+}
+
+/* date on post page, below title */
+#date {
+    text-align: center;
+}
+
+/* link to root on every page */
+#homelink {
+    text-decoration: none;
+}
+
+#homelink:hover {
+    text-decoration: underline;
+}
+
