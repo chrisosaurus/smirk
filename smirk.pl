@@ -74,6 +74,10 @@ for my $file ( reverse sort glob "$indir/*" ){
         $title = $+{title};
         $title =~ s/\-/ /g;
         $title = ucfirst $title;
+        if( $date eq '9999-99-99' ){
+            print "skipping post '$title' as it has date '$date'\n";
+            next;
+        }
     } else {
         # error
         print "ERROR: '$base' failed to match expected format, skipping\n";
