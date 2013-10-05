@@ -96,6 +96,7 @@ for my $file ( reverse sort glob "$indir/*" ){
 
     $content = markdown $content;
 
+    $base = lc $base;
     my $opath = "$outdir/$base.html";
     # generate post content
     my $pc = $post_template;
