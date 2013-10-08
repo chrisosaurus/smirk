@@ -29,8 +29,52 @@ hosting.
 
 Automating
 -----------
-I have smirk set up such that whenever I push an update via git smirk will regenerate my site,
-details coming soon.
+I have smirk set up such that whenever I push an update via git smirk will regenerate my site.
+
+I use gitolite for my git hosting (repos live in /home/git) 
+
+The git user (owner of /home/git) is in the www-data group so he can write to /var/www, and www-data is in the git group so he can read the files copied.
+NB: you can do this many different ways, as long as www-data (web server user/group) and git (gitolite user/group) can read/write to the same place.
+
+    root@segfault# cat /etc/passwd | grep git
+    git:x:1011:1011::/home/git:/bin/bash
+
+    root@segfault# cat /etc/group | grep git
+    www-data:x:33:git
+    git:x:1011:www-data,gitdaemon
+
+I the have a post-update hook setup for the git repo hosting my site
+
+    root@segfault:/home/git/repositories/segfault.git/hooks# ls -la | grep post-update
+    lrwxrwxrwx 1 git git   44 Aug 14 20:05 post-update -> /home/git/.gitolite/hooks/common/post-update
+
+    # contents of /home/git/.gitolite/hooks/common/post-update
+    if [ "$GL_REPO" = "segfault" ]; then
+            DIR=/home/git/checkouts/segfault
+            GIT_DIR=$DIR/.git git fetch
+            GIT_DIR=$DIR/.git GIT_WORK_TREE=$DIR git merge origin/master
+            cd $DIR
+            ./smirk.pl
+
+            rm -rf /var/www/posts
+            rm /var/www/index.html
+            rm /var/www/segfault.css
+
+            if [ -e index.html ]; then
+                cp index.html /var/www/
+            fi
+            if [ -e segfault.css ]; then
+                cp segfault.css /var/www/
+            fi
+            if [ -d posts ]; then
+                cp -r posts/ /var/www/
+            fi
+            if [ -d resources ]; then
+                cp -r resources /var/www
+            fi
+    fi
+
+I also have a git checkout at /home/git/checkouts/segfault which is merely a clone of my repo.
 
 License
 -------
