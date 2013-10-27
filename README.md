@@ -17,8 +17,9 @@ One called 'templates' which by default contains index.html and post.html
 and another called 'content' where each markdown file is formatted as yyyy-mm-dd-some-title.md,
 each of these represents a post. These are converted to html and inserted into templates/post.html
 
-NB: smirk will skip any file in `content/` where the date is `9999-99-99`, I use this to mean 'this
-post has not been finished yet'.
+NB: if smirk encounters a file in `content/` where the date is `9999-99-99` smirk will still process
+this file but will _not_ add it to the index; I use this to denote unfinished posts that I do not yet
+want to publish, thus the post can only be seen if you open it manually or know the complete url.
 
 templates/index.html is populated with one entry in the list per post, sorted in reverse chronological
 order (newest first).
