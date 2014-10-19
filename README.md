@@ -53,7 +53,7 @@ I the have a post-update hook setup for the git repo hosting my site
     if [ "$GL_REPO" = "segfault" ]; then
             DIR=/home/git/checkouts/segfault
             GIT_DIR=$DIR/.git git fetch
-            GIT_DIR=$DIR/.git GIT_WORK_TREE=$DIR git merge origin/master
+            GIT_DIR=$DIR/.git GIT_WORK_TREE=$DIR git reset --hard origin/master
             cd $DIR
             ./smirk.pl
 
